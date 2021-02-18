@@ -3,4 +3,8 @@ Demetri
 Ev
 Maggie :D
 Peter
+<<<<<<< HEAD
 Tyler
+=======
+Lizzy
+>>>>>>> e16abf53f9387c22e458bd04367b6de01609bcb3
