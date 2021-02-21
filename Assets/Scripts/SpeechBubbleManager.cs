@@ -65,6 +65,8 @@ public class SpeechBubbleManager : MonoBehaviour
         {
             bubble.enabled = false;
             tail.enabled = false;
+            ownText.text = "";
+            childText.text = "";
         }
     }
 }
