@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Pickup
+[System.Flags] public enum Pickup
 {
-    Empty = -1,
-    Weirdcircle
+    None = 0,
+    Weirdcircle = 0x1,
+    basket = 0x2,
+    PICKUP_LENGTH 
 };
 
 public class PickupManager : MonoBehaviour
