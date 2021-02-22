@@ -35,8 +35,6 @@ public class SpeechBubbleManager : MonoBehaviour
             textIndex = 0;
             textTimer = 0;
             counting = true;
-            bubble.enabled = true;
-            tail.enabled = true;
         }
     }
 
@@ -56,6 +54,9 @@ public class SpeechBubbleManager : MonoBehaviour
 
         if (counting && textTimer > 1) // incrementing text
         {
+            bubble.enabled = true;
+            tail.enabled = true;
+
             ownText.text += loadedText[0][textIndex]; // add next letter
             childText.text = ownText.text;
             textIndex++;
