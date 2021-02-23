@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnPause()
     {
+        Application.Quit();
         Debug.Log("hit pause");
     }
     private void OnInteract(float input) // unity doesn't like casting inputs as bool, so have to do it as float
