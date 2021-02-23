@@ -6,17 +6,19 @@ using UnityEngine.UI;
 public class SpeechBubbleManager : MonoBehaviour
 {
     // text variables
-    public string loadedText;
+    public List<string> loadedText;
     int textIndex = 0;
 
-    // timing
+    [Header("Timing")]
     [SerializeField]
     float textSpeed = 1;
     float textTimer = 0;
     [SerializeField]
+    float waitTime = 10;
+    [SerializeField]
     bool counting = false;
 
-    // components
+    [Header("Components")]
     [SerializeField]
     Text childText;
     Text ownText;
@@ -27,12 +29,13 @@ public class SpeechBubbleManager : MonoBehaviour
 
     public void LoadText(string text)
     {
-        loadedText = text;
-        textIndex = 0;
-        textTimer = 0;
-        counting = true;
-        bubble.enabled = true;
-        tail.enabled = true;
+        loadedText.Add(text);
+        if (!counting)
+        {
+            textIndex = 0;
+            textTimer = 0;
+            counting = true;
+        }
     }
 
     // Start is called before the first frame update
@@ -47,26 +50,38 @@ public class SpeechBubbleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        textTimer += textSpeed * Time.deltaTime;
-        if (counting)
-        {
-            if (textTimer > 1)
-            {
-                ownText.text += loadedText[textIndex];
-                childText.text = ownText.text;
+        textTimer += textSpeed * Time.deltaTime; // increment time
 
-                textIndex++;
-                textTimer = 0;
-                if (textIndex == loadedText.Length)
-                    counting = false;
+        if (counting && textTimer > 1) // incrementing text
+        {
+            bubble.enabled = true;
+            tail.enabled = true;
+
+            ownText.text += loadedText[0][textIndex]; // add next letter
+            childText.text = ownText.text;
+            textIndex++;
+
+            textTimer = 0; // reset timer
+            if (textIndex == loadedText[0].Length) // end of phrase
+            {
+                loadedText.RemoveAt(0);
+                textIndex = 0;
+                counting = false;
             }
         }
-        else if (textTimer > 10)
+        else if (textTimer > waitTime)
         {
-            bubble.enabled = false;
-            tail.enabled = false;
             ownText.text = "";
             childText.text = "";
+
+            if (loadedText.Count == 0)
+            {
+                bubble.enabled = false;
+                tail.enabled = false;
+                
+            }
+            else
+                counting = true;
         }
     }
 }
