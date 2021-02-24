@@ -61,12 +61,12 @@ public class ElderManager : MonoBehaviour
         FindObjectOfType<PlayerController>().heldItem = Pickup.None; // TODO: make it without a FOOT call
 
         completedTasks |= given_item; // add task to completed tasks
-        speech.LoadText("Thank you.");
+        speech.LoadText("Thank you!");
         assignedTask = Pickup.None;
 
         if (completedTasks != Pickup.PICKUP_LENGTH) // if not all tasks are done
         {
-            speech.LoadText("There is more you must get.");
+            speech.LoadText("There is more that you must get.");
             GiveTask();
         }
         else //else if everything is done
@@ -81,13 +81,13 @@ public class ElderManager : MonoBehaviour
         switch (assignedTask)
         {
             case Pickup.basket:
-                speech.LoadText("I left it over to the left.");
+                speech.LoadText("I left it outside in the left yard.");
                 break;
             case Pickup.cup:
-                speech.LoadText("Its the one to the right.");
+                speech.LoadText("It is to the right, in the kitchen.");
                 break;
             default:
-                speech.LoadText("Its around here somewhere.");
+                speech.LoadText("Its around here somewhere, keep looking.");
                 break;
 
         }
