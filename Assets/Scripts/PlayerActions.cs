@@ -41,6 +41,14 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Stairs"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""77fc9e2f-d9dd-4d37-8f6f-b9a3c8c79b2b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -112,28 +120,6 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""29f438cc-bb3a-4a15-adbd-f06a24e260db"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""32f959e3-58a0-4a04-811f-da7a5d732967"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""cc775715-86ad-4dd5-8c59-63831d57ceb1"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -186,6 +172,72 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""ArrowKeys"",
+                    ""id"": ""ff7a3b97-23a0-4ff5-b940-84db21953c27"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stairs"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""a6ddb1fb-5334-4a7a-b6b3-2dcbdde8c659"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stairs"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""3fceef3c-98ab-4d32-93f4-4f799b213a0f"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stairs"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""WS"",
+                    ""id"": ""3bccc31e-aa66-4e08-a1d7-f6a736fc0baa"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stairs"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""22fbadfd-8da6-406c-a2f0-5cc17ab07bc4"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stairs"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""28480fd7-0934-4e65-805d-8ac38504f6b1"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stairs"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -197,6 +249,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         m_Move_Move = m_Move.FindAction("Move", throwIfNotFound: true);
         m_Move_Interact = m_Move.FindAction("Interact", throwIfNotFound: true);
         m_Move_Pause = m_Move.FindAction("Pause", throwIfNotFound: true);
+        m_Move_Stairs = m_Move.FindAction("Stairs", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,6 +302,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Move_Move;
     private readonly InputAction m_Move_Interact;
     private readonly InputAction m_Move_Pause;
+    private readonly InputAction m_Move_Stairs;
     public struct MoveActions
     {
         private @PlayerActions m_Wrapper;
@@ -256,6 +310,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_Move_Move;
         public InputAction @Interact => m_Wrapper.m_Move_Interact;
         public InputAction @Pause => m_Wrapper.m_Move_Pause;
+        public InputAction @Stairs => m_Wrapper.m_Move_Stairs;
         public InputActionMap Get() { return m_Wrapper.m_Move; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -274,6 +329,9 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_MoveActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_MoveActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_MoveActionsCallbackInterface.OnPause;
+                @Stairs.started -= m_Wrapper.m_MoveActionsCallbackInterface.OnStairs;
+                @Stairs.performed -= m_Wrapper.m_MoveActionsCallbackInterface.OnStairs;
+                @Stairs.canceled -= m_Wrapper.m_MoveActionsCallbackInterface.OnStairs;
             }
             m_Wrapper.m_MoveActionsCallbackInterface = instance;
             if (instance != null)
@@ -287,6 +345,9 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Stairs.started += instance.OnStairs;
+                @Stairs.performed += instance.OnStairs;
+                @Stairs.canceled += instance.OnStairs;
             }
         }
     }
@@ -296,5 +357,6 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnStairs(InputAction.CallbackContext context);
     }
 }
