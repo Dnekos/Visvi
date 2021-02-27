@@ -28,8 +28,8 @@ public class ElderManager : MonoBehaviour
         switch (state)
         {
             case ElderState.Introduction:
-                //speech.LoadText("Hello child, can you help me out?");
-                speech.LoadText(CA.HV.ToString());
+                speech.LoadText("Hello child, can you help me out?");
+                //speech.LoadText(CA.HV.ToString());
                 GiveTask();
                 break;
             case ElderState.GivingTask:
