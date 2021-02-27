@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour
 
     //interacting
     bool hitInteract = false;
-    [SerializeField]
-    Pickup heldItem = Pickup.Empty;
+    public Pickup heldItem = Pickup.None;
 
     PlayerActions inputs;
 
@@ -33,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnPause()
     {
+        Application.Quit();
         Debug.Log("hit pause");
     }
     private void OnInteract(float input) // unity doesn't like casting inputs as bool, so have to do it as float
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         switch(collision.tag)
         {
             case "Pickup":
-                if (heldItem == Pickup.Empty) // only pickup if not holding item
+                if (heldItem == Pickup.None && collision.GetComponent<PickupManager>().data == ElderManager.assignedTask) // only pickup if not holding item and item matches task
                 {
                     hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                     heldItem = collision.GetComponent<PickupManager>().data; // set held item
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case "Talkable":
                 hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
-                collision.GetComponent<ElderManager>().Talk();
+                collision.GetComponent<ElderManager>().Talk(heldItem);
                 break;
         }
     }

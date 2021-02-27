@@ -9,6 +9,6 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = followTarget.position + cameraOffset;
+        transform.position = Vector3.Lerp(transform.position, followTarget.position + cameraOffset + new Vector3(1f * followTarget.localScale.x, 0, 0), 0.1f);
     }
 }
