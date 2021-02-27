@@ -22,6 +22,7 @@ public class ElderManager : MonoBehaviour
     private void Start()
     {
         speech = GetComponentInChildren<SpeechBubbleManager>();
+        //load text
     }
     public void Talk(Pickup held_item)
     {
@@ -29,7 +30,8 @@ public class ElderManager : MonoBehaviour
         {
             case ElderState.Introduction:
                 //speech.LoadText("Hello child, can you help me out?");
-                speech.LoadText(CA.HV.ToString());
+                string text = ((char)CA.HV).ToString();
+                speech.LoadText(text);
                 GiveTask();
                 break;
             case ElderState.GivingTask:
