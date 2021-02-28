@@ -29,6 +29,7 @@ public class ElderManager : MonoBehaviour
         {
             case ElderState.Introduction:
                 speech.LoadText("Hello child, can you help me out?");
+                //speech.LoadText(CA.HV.ToString());
                 GiveTask();
                 break;
             case ElderState.GivingTask:
@@ -86,10 +87,15 @@ public class ElderManager : MonoBehaviour
             case Pickup.cup:
                 speech.LoadText("It is to the right, in the kitchen.");
                 break;
+            case Pickup.flour:
+                speech.LoadText("I keep it in the Kitchen, by the door.");
+                break;
+            case Pickup.grapes:
+                speech.LoadText("They grow by the far end of the left yard.");
+                break;
             default:
                 speech.LoadText("Its around here somewhere, keep looking.");
                 break;
-
         }
     }
 

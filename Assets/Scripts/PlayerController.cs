@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.x < 0) // if going left, flip sprite
             transform.localScale = new Vector3(-1, 1, 1);
         else if (moveDirection.x > 0) // if going right, set sprite back
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1); 
 
         transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
         //hitInteract = false; // reset if didnt hit anything //BUG: preventing it from working at all, events orders or something
