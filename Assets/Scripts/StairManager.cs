@@ -6,6 +6,7 @@ public class StairManager : MonoBehaviour
 {
     private PlatformEffector2D effector2D;
     private PlayerActions inputs;
+    private float waitTimer;
     public float waitTime;
     public bool top;
 
@@ -19,6 +20,7 @@ public class StairManager : MonoBehaviour
     {
         effector2D = GetComponent<PlatformEffector2D>();
         effector2D.surfaceArc = 0f;
+        waitTimer = waitTime;
     }
 
     // Update is called once per frame
@@ -33,16 +35,12 @@ public class StairManager : MonoBehaviour
         if (input != 0 && waitTime <= 0 && !top)
         {
             effector2D.surfaceArc = 180f;
-            waitTime = 0.5f;
+            waitTime = waitTimer;
         }
         if (input < 0 && top)
         {
             effector2D.surfaceArc = 0f;
-            waitTime = 0.5f;
-        }
-        else if (top && waitTime <= 0)
-        { 
-            effector2D.surfaceArc = 180f;
+            waitTime = waitTimer;
         }
     }
 
@@ -51,6 +49,10 @@ public class StairManager : MonoBehaviour
         if (col.tag.Equals("Player") && !col.isTrigger && !top)
         {
             effector2D.surfaceArc = 0f;
+        }
+        if (col.tag.Equals("Player") && !col.isTrigger && top)
+        {
+            effector2D.surfaceArc = 180f;
         }
     }
 
