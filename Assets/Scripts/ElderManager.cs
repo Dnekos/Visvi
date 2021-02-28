@@ -66,7 +66,7 @@ public class ElderManager : MonoBehaviour
 
         speech.LoadText(assignedTask.CompletionLine()); // completion text bubble
 
-        if (completedTasks != Pickup.PICKUP_LENGTH) // if not all tasks are done
+        if (completedTasks != Pickup.All_PICKUPS) // if not all tasks are done
         {
             speech.LoadText("There is more that you must get.");
             GiveTask();
