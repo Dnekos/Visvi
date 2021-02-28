@@ -14,7 +14,7 @@ enum ElderState
 public class ElderManager : MonoBehaviour
 {
     SpeechBubbleManager speech;
-    public static Pickup assignedTask = Pickup.None;
+    public static TaskDialogue assignedTask;
     [SerializeField]
     Pickup completedTasks;
     ElderState state;
@@ -22,6 +22,8 @@ public class ElderManager : MonoBehaviour
     private void Start()
     {
         speech = GetComponentInChildren<SpeechBubbleManager>();
+        assignedTask = new TaskDialogue();
+        //load text
     }
     public void Talk(Pickup held_item)
     {
@@ -29,7 +31,6 @@ public class ElderManager : MonoBehaviour
         {
             case ElderState.Introduction:
                 speech.LoadText("Hello child, can you help me out?");
-                //speech.LoadText(CA.HV.ToString());
                 GiveTask();
                 break;
             case ElderState.GivingTask:
@@ -53,7 +54,7 @@ public class ElderManager : MonoBehaviour
             GiveHint();
             return;
         }
-        else if (given_item != assignedTask)
+        else if (given_item != assignedTask.GetTask())
         {
             speech.LoadText("That isn't what I asked for.");
             return;
@@ -62,16 +63,18 @@ public class ElderManager : MonoBehaviour
         FindObjectOfType<PlayerController>().heldItem = Pickup.None; // TODO: make it without a FOOT call
 
         completedTasks |= given_item; // add task to completed tasks
-        speech.LoadText("Thank you!");
-        assignedTask = Pickup.None;
 
-        if (completedTasks != Pickup.PICKUP_LENGTH) // if not all tasks are done
+        speech.LoadText(assignedTask.CompletionLine()); // completion text bubble
+
+        if (completedTasks != Pickup.All_PICKUPS) // if not all tasks are done
         {
             speech.LoadText("There is more that you must get.");
             GiveTask();
         }
         else //else if everything is done
         {
+            assignedTask = new TaskDialogue();
+
             state = ElderState.Completion;
             speech.LoadText("I have everything I need.");
         }
@@ -79,24 +82,7 @@ public class ElderManager : MonoBehaviour
 
     void GiveHint()
     {
-        switch (assignedTask)
-        {
-            case Pickup.basket:
-                speech.LoadText("I left it outside in the left yard.");
-                break;
-            case Pickup.cup:
-                speech.LoadText("It is to the right, in the kitchen.");
-                break;
-            case Pickup.flour:
-                speech.LoadText("I keep it in the Kitchen, by the door.");
-                break;
-            case Pickup.grapes:
-                speech.LoadText("They grow by the far end of the left yard.");
-                break;
-            default:
-                speech.LoadText("Its around here somewhere, keep looking.");
-                break;
-        }
+        speech.LoadText(assignedTask.GiveHint());
     }
 
     public void GiveTask()
@@ -104,19 +90,19 @@ public class ElderManager : MonoBehaviour
         state = ElderState.AwaitingTask;
 
         int FAILSAFE = 0;
-        while (assignedTask == Pickup.None)
+        while (assignedTask.GetTask() == Pickup.None)
         {
             FAILSAFE++;
             if (FAILSAFE > 30) // shouldn't be needed but preventing an infinite loop if something goes wrong
                 break;
 
-            var allPickups = (Pickup[])System.Enum.GetValues(typeof(Pickup));
-            Pickup new_task = allPickups[Random.Range(1, allPickups.Length - 1)];
+            var allPickups = System.Enum.GetValues(typeof(Pickup)); // get array of flags
+            Pickup new_task = ((Pickup[])allPickups)[Random.Range(1, allPickups.Length - 1)]; // random flag in array
 
-            if (!completedTasks.HasFlag(new_task))
+            if (!completedTasks.HasFlag(new_task)) // if not completed already
             {
-                assignedTask = new_task;
-                speech.LoadText("Can you give me a " + assignedTask + "?");
+                assignedTask = new TaskDialogue(new_task);
+                speech.LoadText(assignedTask.StartLine());
             }
         }
     }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public enum CA //cherokee alphabet
 {
-
     A = '\u13A0',
     E = '\u13A1',
     I = '\u13A2',
@@ -92,11 +91,18 @@ public enum CA //cherokee alphabet
     YU = '\u13F3',
     YV = '\u13F4'
 };
-
+public enum CW
+{
+    cup = CA.U+CA.LI+CA.GU+CA.GU,
+    basket = CA.TA+CA.LU+CA.TSA,
+    flour = CA.I+CA.SV+CA.WA+CA.NI+CA.GE,
+    grapes = CA.U+CA.NI+CA.TE+CA.LV+CA.LA+CA.DI,
+}
 public class SpeechBubbleManager : MonoBehaviour
 {
     // text variables
-    public List<string> loadedText;
+    public List<KeyValuePair<string,string>> loadedText;
+    //List<string> subtextText;
     int textIndex = 0;
 
     [Header("Timing")]
@@ -111,15 +117,17 @@ public class SpeechBubbleManager : MonoBehaviour
     [Header("Components")]
     [SerializeField]
     Text childText;
+    [SerializeField]
+    Text phoneticText;
     Text ownText;
     [SerializeField]
     Image bubble;
     [SerializeField]
     Image tail;
 
-    public void LoadText(string text)
+    public void LoadText(string text, string subtext = default)
     {
-        loadedText.Add(text);
+        loadedText.Add(new KeyValuePair<string,string>(text,subtext));
         if (!counting)
         {
             textIndex = 0;
@@ -131,10 +139,13 @@ public class SpeechBubbleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loadedText = new List<KeyValuePair<string, string>>();
         ownText = GetComponent<Text>();
 
         ownText.text = "";
         childText.text = "";
+        bubble.enabled = false;
+        tail.enabled = false;
     }
 
     // Update is called once per frame
@@ -144,15 +155,23 @@ public class SpeechBubbleManager : MonoBehaviour
 
         if (counting && textTimer > 1) // incrementing text
         {
+            if (loadedText[0].Value == null)
+                bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 11);
+            else
+                bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 18);
+
+            //bubble.rectTransform.sizeDelta = new Vector2(1, 5);
+
             bubble.enabled = true;
             tail.enabled = true;
 
-            ownText.text += loadedText[0][textIndex]; // add next letter
+            phoneticText.text = loadedText[0].Value;
+            ownText.text += loadedText[0].Key[textIndex]; // add next letter
             childText.text = ownText.text;
             textIndex++;
 
             textTimer = 0; // reset timer
-            if (textIndex == loadedText[0].Length) // end of phrase
+            if (textIndex == loadedText[0].Key.Length) // end of phrase
             {
                 loadedText.RemoveAt(0);
                 textIndex = 0;
@@ -168,7 +187,6 @@ public class SpeechBubbleManager : MonoBehaviour
             {
                 bubble.enabled = false;
                 tail.enabled = false;
-                
             }
             else
                 counting = true;
