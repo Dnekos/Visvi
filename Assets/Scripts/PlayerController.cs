@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         switch(collision.tag)
         {
             case "Pickup":
-                if (heldItem == Pickup.None && collision.GetComponent<PickupManager>().data == ElderManager.assignedTask) // only pickup if not holding item and item matches task
+                if (heldItem == Pickup.None && collision.GetComponent<PickupManager>().data == ElderManager.assignedTask.GetTask()) // only pickup if not holding item and item matches task
                 {
                     hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                     heldItem = collision.GetComponent<PickupManager>().data; // set held item
