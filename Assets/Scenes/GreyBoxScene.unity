@@ -8957,8 +8957,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859524158}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -38.97, y: -1.5, z: 11.616997}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: -38.97, y: -1.57, z: 11.616997}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 1893623186}
   m_RootOrder: 7
@@ -9032,8 +9032,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4378871c8905cdd47aca4f5ea202dfa9, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.51660514, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 3178317b8beb9e7489bcf47314520711, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -9287,7 +9287,7 @@ GameObject:
   - component: {fileID: 1429591341}
   - component: {fileID: 1429591340}
   m_Layer: 0
-  m_Name: Mint (1)
+  m_Name: Napkins
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9376,7 +9376,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4378871c8905cdd47aca4f5ea202dfa9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c9f6e6bbf09972f42916f6da94735653, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
