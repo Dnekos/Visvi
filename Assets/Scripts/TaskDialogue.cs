@@ -29,43 +29,53 @@ public class TaskDialogue
         mindex = index;
         switch (index)
         {
-            case Pickup.basket:
+            case Pickup.Basket:
                 name = "\u13D4\u13B7\u13E3";
                 op_dialogue = "Can you give me my "+name+"?";
                 hint_dialogue = new string[] { "I left it outside in the left yard." };
                 break;
-            case Pickup.spoons:
+            case Pickup.Grapes:
                 //name = "\u13A4\u13B5\u13AB\u13AB"; // cup name
                 name = "spoons";
                 op_dialogue = "Can you give me some " + name + "?";
                 hint_dialogue = new string[] { "It is to the right, in the kitchen." };
                 break;
-            case Pickup.flour:
+            case Pickup.Sugar:
                 name = "\u13A2\u13D2\u13E9\u13C2\u13A8";
                 op_dialogue = "Can you give some " + name + "?";
                 hint_dialogue = new string[] { "I keep it in the Kitchen, by the door." };
                 break;
-            case Pickup.grapes:
+            case Pickup.Mixingbowl:
                 name = "\u13A4\u13C2\u13D6\u13B8\u13B3\u13D7";
                 op_dialogue = "Can you get me some " + name + "?";
                 hint_dialogue = new string[] { "They grow by the far end of the left yard." };
                 break;
-            case Pickup.mixingbowl:
+            case Pickup.Flour:
                 name = "";
                 op_dialogue = "Can you give me a " + index + "?";
                 hint_dialogue = new string[] { "Its around here somewhere, keep looking." };
                 break;
-            case Pickup.grapejuice:
+            case Pickup.Mint:
                 name = "";
                 op_dialogue = "Can you give me a " + index + "?";
                 hint_dialogue = new string[] { "Its around here somewhere, keep looking." };
                 break;
-            case Pickup.servingbowl:
+            case Pickup.Juice:
                 name = "";
                 op_dialogue = "Can you give me a " + index + "?";
                 hint_dialogue = new string[] { "Its around here somewhere, keep looking." };
                 break;
-            case Pickup.sugar:
+            case Pickup.Spoon:
+                name = "";
+                op_dialogue = "Can you give me a " + index + "?";
+                hint_dialogue = new string[] { "Its around here somewhere, keep looking." };
+                break;
+            case Pickup.ServingBowl:
+                name = "";
+                op_dialogue = "Can you give me a " + index + "?";
+                hint_dialogue = new string[] { "Its around here somewhere, keep looking." };
+                break;
+            case Pickup.Napkin:
                 name = "";
                 op_dialogue = "Can you give me a " + index + "?";
                 hint_dialogue = new string[] { "Its around here somewhere, keep looking." };
