@@ -14,8 +14,6 @@ enum ElderState
 public class ElderManager : MonoBehaviour
 {
     SpeechBubbleManager speech;
-    [SerializeField]
-    //Pickup NextTask;
     ElderState state;
 
     // current tasks
@@ -35,6 +33,9 @@ public class ElderManager : MonoBehaviour
 
     public void Talk(Pickup held_item)
     {
+        if (speech.loadedText.Count != 0)
+            return;
+
         switch (state)
         {
             case ElderState.Introduction:
@@ -63,7 +64,7 @@ public class ElderManager : MonoBehaviour
 
         if (given_item == Pickup.None)
         {
-            GiveHint();
+            speech.LoadText(assignedTask.GiveHint());
             return;
         }
         else if (given_item != assignedTask.GetTask())
@@ -74,13 +75,12 @@ public class ElderManager : MonoBehaviour
 
         FindObjectOfType<PlayerController>().heldItem = Pickup.None; // TODO: make it without a FOOT call
 
-        //NextTask = IncrementPickup(NextTask); // increment taskstate
-
-        speech.LoadText(assignedTask.CompletionLine()); // completion text bubble
+        foreach (string line in assignedTask.CompletionLine())
+            speech.LoadText(line); // completion text bubble
 
         if (IncrementPickup(assignedTask.GetTask()) != Pickup.Complete) // if not all tasks are done
         {
-            speech.LoadText("There is more that you must get.");
+            //speech.LoadText("There is more that you must get.");
             GiveTask();
         }
         else //else if everything is done
@@ -92,17 +92,14 @@ public class ElderManager : MonoBehaviour
         }
     }
 
-    void GiveHint()
-    {
-        speech.LoadText(assignedTask.GiveHint());
-    }
-
     public void GiveTask()
     {
         state = ElderState.AwaitingTask;
 
         assignedTask = new TaskDialogue(IncrementPickup(assignedTask.GetTask()));
-        speech.LoadText(assignedTask.StartLine());
+
+        foreach (string line in assignedTask.StartLine())
+            speech.LoadText(line); // completion text bubble
     }
 
     void CompletionDialogue()
