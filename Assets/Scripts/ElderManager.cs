@@ -14,6 +14,7 @@ enum ElderState
 public class ElderManager : MonoBehaviour
 {
     SpeechBubbleManager speech;
+    [SerializeField]
     ElderState state;
 
     // current tasks
@@ -23,7 +24,10 @@ public class ElderManager : MonoBehaviour
     {
         speech = GetComponentInChildren<SpeechBubbleManager>();
         assignedTask = new TaskDialogue();
-        //load text
+
+        // intro text
+        speech.LoadText("Hello child, it is so good to see you!");
+        speech.LoadText("Come over and talk to me!");
     }
 
     Pickup IncrementPickup(Pickup item)
@@ -39,11 +43,10 @@ public class ElderManager : MonoBehaviour
         switch (state)
         {
             case ElderState.Introduction:
-                speech.LoadText("Hello child, it is so good to see you!");
-                speech.LoadText("Now that you’re here I thought we could make a tasty treat together");
-                speech.LoadText("but first you will need to gather the ingredients.");
-                speech.LoadText("However, I want you to get a little closer to our heritage,");
-                speech.LoadText("We will learn a bit of the Cherokee language!");
+                speech.LoadText("Now that you’re here I thought we could make a tasty treat together.");
+                speech.LoadText("But first you will need to gather the ingredients.");
+                speech.LoadText("However, I want you to get a little closer to our heritage.");
+                speech.LoadText("So, I will teach you a bit of the Cherokee language!");
                 GiveTask();
                 break;
             case ElderState.GivingTask:
