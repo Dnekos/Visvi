@@ -6,9 +6,13 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform followTarget;
     public Vector3 cameraOffset;
-
-    private void FixedUpdate()
+    Vector3 velocity = Vector3.zero;
+    [SerializeField]
+    float smoothTime = 0.3f;
+    private void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, followTarget.position + cameraOffset + new Vector3(1f * followTarget.localScale.x, 0, 0), 0.1f);
+        Vector3 target_position = followTarget.position + cameraOffset + new Vector3(1f * followTarget.localScale.x, 0, 0);
+
+        transform.position = Vector3.SmoothDamp(transform.position, target_position, ref velocity, smoothTime);
     }
 }

@@ -520,7 +520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d146a5e28bbb76439b43a398a1d5dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  completedTasks: 0
 --- !u!1 &257176485
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,11 +630,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383ae5525e607459a60a24bdce5769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadedText: []
   textSpeed: 50
   waitTime: 10
   counting: 0
   childText: {fileID: 309877372}
+  phoneticText: {fileID: 0}
   bubble: {fileID: 12132530}
   tail: {fileID: 1576031549}
 --- !u!1 &309877369
@@ -972,6 +971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTarget: {fileID: 810457104}
   cameraOffset: {x: 0, y: 0, z: -30}
+  smoothTime: 0.3
 --- !u!4 &810457104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8903588384963591357, guid: d50ec88e51971d24ebb4f679e06295aa, type: 3}
@@ -1450,7 +1450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8903588384963591357, guid: d50ec88e51971d24ebb4f679e06295aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.19
+      value: -0.31
       objectReference: {fileID: 0}
     - target: {fileID: 8903588384963591357, guid: d50ec88e51971d24ebb4f679e06295aa, type: 3}
       propertyPath: m_LocalPosition.z
