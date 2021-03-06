@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickup
   - Talkable
+  - PauseMenu
   layers:
   - Default
   - TransparentFX
