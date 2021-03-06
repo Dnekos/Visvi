@@ -58,6 +58,9 @@ TagManager:
   - name: Play Area
     uniqueID: 3201776625
     locked: 0
+  - name: Fireplace
+    uniqueID: 3245897283
+    locked: 0
   - name: Character
     uniqueID: 2461192211
     locked: 0
