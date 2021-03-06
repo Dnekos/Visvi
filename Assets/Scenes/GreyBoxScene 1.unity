@@ -1358,9 +1358,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ff21c3f3421674b855d2c96ef8d891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  MenuMusic: {fileID: 0}
-  LevelMusic: {fileID: 0}
+  musicSource: {fileID: 297500374}
+  MenuMusic: {fileID: 8300000, guid: 4addaa3d6209608409fecc3dab486f9b, type: 3}
+  LevelMusic: {fileID: 8300000, guid: 9e7aba8a10f57c147b9d8222903ed588, type: 3}
 --- !u!4 &620526541
 Transform:
   m_ObjectHideFlags: 0
@@ -20777,7 +20777,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d71a368f4d9079745b081334a4dc8512, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

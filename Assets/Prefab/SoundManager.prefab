@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 0}
-  MenuMusic: {fileID: 0}
-  LevelMusic: {fileID: 0}
+  MenuMusic: {fileID: 8300000, guid: 4addaa3d6209608409fecc3dab486f9b, type: 3}
+  LevelMusic: {fileID: 8300000, guid: 9e7aba8a10f57c147b9d8222903ed588, type: 3}
 --- !u!1 &8233584557954625015
 GameObject:
   m_ObjectHideFlags: 0
