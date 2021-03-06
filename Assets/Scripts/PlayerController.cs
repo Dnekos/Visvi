@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
                 {
                     hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                     heldItem = collision.GetComponent<PickupManager>().data; // set held item
+                    SoundManager.PlayPickupSFX();
                     Destroy(collision.gameObject);
                 }
                 break;

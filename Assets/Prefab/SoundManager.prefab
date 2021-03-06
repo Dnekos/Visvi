@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ff21c3f3421674b855d2c96ef8d891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
+  musicSource: {fileID: 8233584557954625013}
   MenuMusic: {fileID: 8300000, guid: 4addaa3d6209608409fecc3dab486f9b, type: 3}
   LevelMusic: {fileID: 8300000, guid: 9e7aba8a10f57c147b9d8222903ed588, type: 3}
 --- !u!1 &8233584557954625015

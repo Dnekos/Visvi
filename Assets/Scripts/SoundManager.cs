@@ -14,8 +14,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     AudioClip LevelMusic;
 
-    [SerializeField]
-    static AudioClip ButtonSFX;
+  //  [SerializeField]
+   // static AudioClip ButtonSFX;
     [SerializeField]
     static AudioClip PickupSFX;
 
@@ -26,8 +26,8 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(transform.gameObject);
         SceneManager.activeSceneChanged += ChangedActiveScene;
 
-        PickupSFX = Resources.Load<AudioClip>("Sounds/eat_sfx");
-        ButtonSFX = Resources.Load<AudioClip>("Sounds/button_sfx");
+        PickupSFX = Resources.Load<AudioClip>("Sounds/pickup_sfx");
+      //  ButtonSFX = Resources.Load<AudioClip>("Sounds/button_sfx");
     }
 
     static public void PlayPickupSFX()
@@ -37,7 +37,7 @@ public class SoundManager : MonoBehaviour
 
     static public void PlayButtonSFX()
     {
-        sfxSource.PlayOneShot(ButtonSFX);
+    //    sfxSource.PlayOneShot(ButtonSFX);
     }
 
 

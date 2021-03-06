@@ -29,11 +29,11 @@ public class PickupManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player" && ElderManager.assignedTask.GetTask() == data)
-            transform.localScale = originalscale;
+            transform.localScale = originalscale * 1.2f;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player" && ElderManager.assignedTask.GetTask() == data)
-            transform.localScale = originalscale * 0.2f;
+            transform.localScale = originalscale;
     }
 }
