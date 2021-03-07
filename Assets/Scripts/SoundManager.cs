@@ -32,12 +32,14 @@ public class SoundManager : MonoBehaviour
 
     static public void PlayPickupSFX()
     {
-        sfxSource.PlayOneShot(PickupSFX);
+        if (!Application.isEditor)
+            sfxSource.PlayOneShot(PickupSFX);
     }
 
     static public void PlayButtonSFX()
     {
-    //    sfxSource.PlayOneShot(ButtonSFX);
+       // if (!Application.isEditor)
+            //sfxSource.PlayOneShot(ButtonSFX);
     }
 
 

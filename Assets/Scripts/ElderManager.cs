@@ -20,6 +20,10 @@ public class ElderManager : MonoBehaviour
     // current tasks
     public static TaskDialogue assignedTask;
 
+    [Header("Debug")]
+    [SerializeField]
+    Pickup CurrentTask;
+
     private void Start()
     {
         speech = GetComponentInChildren<SpeechBubbleManager>();
@@ -28,6 +32,12 @@ public class ElderManager : MonoBehaviour
         // intro text
         speech.LoadText("Hello child, it is so good to see you!");
         speech.LoadText("Come over and talk to me!");
+    }
+
+    private void Update()
+    {
+        if (assignedTask.GetTask() != CurrentTask)
+            assignedTask = new TaskDialogue(CurrentTask);
     }
 
     Pickup IncrementPickup(Pickup item)
@@ -88,7 +98,7 @@ public class ElderManager : MonoBehaviour
         }
         else //else if everything is done
         {
-            assignedTask = null;
+            assignedTask = new TaskDialogue();
 
             state = ElderState.Completion;
             CompletionDialogue();
@@ -100,6 +110,7 @@ public class ElderManager : MonoBehaviour
         state = ElderState.AwaitingTask;
 
         assignedTask = new TaskDialogue(IncrementPickup(assignedTask.GetTask()));
+        CurrentTask = assignedTask.GetTask();
 
         foreach (string line in assignedTask.StartLine())
             speech.LoadText(line); // completion text bubble
