@@ -2,23 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Flags] public enum Pickup
+public enum Pickup
 {
-    None = 0,
-    spoons = 0x1,
-    basket = 0x2,
-    flour = 0x4,
-    grapes = 0x8,
-    grapejuice = 0x10,
-    sugar = 0x20,
-    servingbowl = 0x40,
-    mixingbowl = 0x80,
-
-    //PICKUP_LENGTH = basket | spoons | flour | grapes | grapejuice | sugar | servingbowl | mixingbowl // all of them
-    All_PICKUPS = basket | spoons | flour | grapes // only items with dialogue/gameobjects
+    None,
+    Basket,
+    Grapes,
+    Sugar,
+    Mixingbowl,
+    Flour,
+    Mint,
+    Juice,
+    Spoon,
+    ServingBowl,
+    Napkin,
+    Complete
 };
 
 public class PickupManager : MonoBehaviour
 {
     public Pickup data;
+    Vector3 originalscale;
+    private void Start()
+    {
+        originalscale = transform.localScale;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && ElderManager.assignedTask.GetTask() == data)
+            transform.localScale = originalscale * 1.2f;
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && ElderManager.assignedTask.GetTask() == data)
+            transform.localScale = originalscale;
+    }
 }

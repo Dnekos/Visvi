@@ -137,7 +137,7 @@ public class SpeechBubbleManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         loadedText = new List<KeyValuePair<string, string>>();
         ownText = GetComponent<Text>();

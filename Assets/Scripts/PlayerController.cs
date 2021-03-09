@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public Pickup heldItem = Pickup.None;
 
     PlayerActions inputs;
-
+    bool paused = false;
     private void Awake()
     {
         inputs = new PlayerActions();
@@ -30,9 +30,9 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(input, 0);
     }
 
-    private void OnPause()
+    public void OnPause()
     {
-        Application.Quit();
+        paused = !paused;
         Debug.Log("hit pause");
     }
     private void OnInteract(float input) // unity doesn't like casting inputs as bool, so have to do it as float
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!hitInteract)
+        if (!hitInteract || paused)
             return;
         switch(collision.tag)
         {
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
                 {
                     hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                     heldItem = collision.GetComponent<PickupManager>().data; // set held item
+                    SoundManager.PlayPickupSFX();
                     Destroy(collision.gameObject);
                 }
                 break;
@@ -68,13 +69,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (moveDirection.x < 0) // if going left, flip sprite
-            transform.localScale = new Vector3(-1, 1, 1);
-        else if (moveDirection.x > 0) // if going right, set sprite back
-            transform.localScale = new Vector3(1, 1, 1); 
+        if (!paused)
+        {
+            if (moveDirection.x < 0) // if going left, flip sprite
+                transform.localScale = new Vector3(-1, 1, 1);
+            else if (moveDirection.x > 0) // if going right, set sprite back
+                transform.localScale = new Vector3(1, 1, 1);
 
-        transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
-        //hitInteract = false; // reset if didnt hit anything //BUG: preventing it from working at all, events orders or something
+            transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
+        }
     }
 
     //these two are needed for the inputs to work
