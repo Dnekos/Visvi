@@ -26780,7 +26780,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1779807948}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 860170161}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: PauseScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8903588385193159013}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1779807948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29475,3 +29499,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d50ec88e51971d24ebb4f679e06295aa, type: 3}
+--- !u!114 &8903588385193159013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8903588384963591346, guid: d50ec88e51971d24ebb4f679e06295aa, type: 3}
+  m_PrefabInstance: {fileID: 8903588385193159012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c1c9b3dcbdfca40805d310f8ce78f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
