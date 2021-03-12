@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private bool paused = false;
+    private GameState state = PlayerController.State;
     public GameObject pauseMenu;
     PlayerActions inputs;
+    
 
     private void Awake()
     {
@@ -27,14 +28,14 @@ public class UIManager : MonoBehaviour
 
     public void PauseScene()
     {
-        if (!paused)
+        if (state == GameState.Pause)
         {
-            paused = true;
+            state = GameState.Pause;
             pauseMenu.SetActive(true);
         }
-        else
+        else 
         {
-            paused = false;
+            state = GameState.Play;
             pauseMenu.SetActive(false);
         }
     }
