@@ -3546,7 +3546,7 @@ GameObject:
   - component: {fileID: 624483481}
   - component: {fileID: 624483480}
   - component: {fileID: 624483479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Layer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13466,7 +13466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 988859448}
   - component: {fileID: 988859447}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GreyBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25949,6 +25949,10 @@ PrefabInstance:
       value: 38.664
       objectReference: {fileID: 0}
     - target: {fileID: 3529243013235882965, guid: 3d3b11a2b4df38d40bf79c96324d4576, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3529243013235882965, guid: 3d3b11a2b4df38d40bf79c96324d4576, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -25966,7 +25970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5662763153506351470, guid: 3d3b11a2b4df38d40bf79c96324d4576, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d3b11a2b4df38d40bf79c96324d4576, type: 3}

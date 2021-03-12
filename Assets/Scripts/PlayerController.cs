@@ -19,7 +19,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float moveSpeed = 3;
     Vector3 moveDirection;
-    public float OnStair;
+
+    // stay on ground variables
+    [SerializeField]
+    Transform feet;
+    public bool OnStair;
+    
     //interacting
     bool hitInteract = false;
     public Pickup heldItem = Pickup.None;
@@ -102,6 +107,16 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
 
         transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
+
+        if (OnStair)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.3f), Vector2.down, 1, LayerMask.GetMask("Stair"));
+            Debug.Log(hit.distance - 0.3);
+            Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
+            //if (!hit.collider.isTrigger)
+            if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f)
+                transform.position -= Vector3.up * (hit.distance - 0.3f);
+        }
     }
 
     //these two are needed for the inputs to work
