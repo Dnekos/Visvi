@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameState
+{
+    Play,
+    Pause,
+    Talk
+};
 public class PlayerController : MonoBehaviour
 {
-
+    public static GameState State;
+    
     //movement
     [SerializeField]
     float moveSpeed = 3;
@@ -32,7 +40,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause()
     {
-        paused = !paused;
+        if (State == GameState.Pause)
+            State = GameState.Play;
+        else
+            State = GameState.Pause;
+
         Debug.Log("hit pause");
     }
     private void OnInteract(float input) // unity doesn't like casting inputs as bool, so have to do it as float
