@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class StairManager : MonoBehaviour
 {
-    private PlatformEffector2D effector2D;
-    private PlayerActions inputs;
-    private float waitTimer;
-    public float waitTime;
-    public bool top;
+    PlatformEffector2D effector2D;
+    PlayerActions inputs;
+
+    [SerializeField]
+    bool isSecondFloor;
+    
+    // stay on ground variables
+    [SerializeField]
+    Transform feet;
 
     private void Awake()
     {
@@ -20,41 +24,42 @@ public class StairManager : MonoBehaviour
     {
         effector2D = GetComponent<PlatformEffector2D>();
         effector2D.surfaceArc = 0f;
-        waitTimer = waitTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (waitTime > 0)
-            waitTime -= Time.deltaTime;
+
+        if (false)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.3f), Vector2.down, 1, LayerMask.GetMask("Ground"));
+            Debug.Log(hit.distance - 0.3);
+            Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
+            //if (!hit.collider.isTrigger)
+            transform.position -= Vector3.up * (hit.distance - 0.3f);
+        }
     }
 
     void OnStairs(float input)
     {
         if (PlayerController.State != GameState.Play)
             return;
-        if (input != 0 && waitTime <= 0 && !top)
-        {
+
+        if (input != 0 &&  !isSecondFloor)
             effector2D.surfaceArc = 180f;
-            waitTime = waitTimer;
-        }
-        if (input < 0 && top)
-        {
+        if (input < 0 && isSecondFloor)
             effector2D.surfaceArc = 0f;
-            waitTime = waitTimer;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag.Equals("Player") && !col.isTrigger && !top)
+        if (col.tag.Equals("Player") && !col.isTrigger && !isSecondFloor)
             effector2D.surfaceArc = 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag.Equals("Player") && !col.isTrigger && top)
+        if (col.tag.Equals("Player") && !col.isTrigger && isSecondFloor)
             effector2D.surfaceArc = 180f;
     }
     //these two are needed for the inputs to work

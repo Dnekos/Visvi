@@ -6,25 +6,27 @@ using UnityEngine;
 public enum GameState
 {
     Play,
+    Jump,
     Pause,
     Talk
 };
 public class PlayerController : MonoBehaviour
 {
     public static GameState State;
-    
+    GameState pre_pausestate;
+
     //movement
     [SerializeField]
     float moveSpeed = 3;
     Vector3 moveDirection;
-
+    public float OnStair;
     //interacting
     bool hitInteract = false;
     public Pickup heldItem = Pickup.None;
     SpeechBubbleManager dialogue;
 
     PlayerActions inputs;
-    bool paused = false;
+
     private void Awake()
     {
         inputs = new PlayerActions();
@@ -39,17 +41,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(float input)
     {
-        //Debug.Log(input);
         moveDirection = new Vector3(input, 0);
     }
 
     public void OnPause()
     {
         if (State == GameState.Pause)
-            State = GameState.Play;
+            State = pre_pausestate; // return state to last
         else
-            State = GameState.Pause;
-
+        {
+            pre_pausestate = State; // hold local value state to go back to
+            State = GameState.Pause; // pause game
+        }
         Debug.Log("hit pause");
     }
     private void OnInteract(float input) // unity doesn't like casting inputs as bool, so have to do it as float
@@ -90,7 +93,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(State);
         if (State != GameState.Play)
             return;
 

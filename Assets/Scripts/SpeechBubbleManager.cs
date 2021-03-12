@@ -108,8 +108,6 @@ public class SpeechBubbleManager : MonoBehaviour
     [SerializeField]
     float textSpeed = 1;
     float textTimer = 0;
-    //[SerializeField]
-    //float waitTime = 10;
     [SerializeField]
     bool counting = false;
 
@@ -197,18 +195,5 @@ public class SpeechBubbleManager : MonoBehaviour
                 counting = false;
             }
         }
-        /*else if (textTimer > waitTime)
-        {
-            ownText.text = "";
-            childText.text = "";
-
-            if (loadedText.Count == 0)
-            {
-                bubble.enabled = false;
-                tail.enabled = false;
-            }
-            else
-                counting = true;
-        }*/
     }
 }
