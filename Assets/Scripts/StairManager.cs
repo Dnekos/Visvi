@@ -6,7 +6,6 @@ public class StairManager : MonoBehaviour
 {
     private PlatformEffector2D effector2D;
     private PlayerActions inputs;
-    private GameState state = PlayerController.State;
     private float waitTimer;
     public float waitTime;
     public bool top;
@@ -33,12 +32,14 @@ public class StairManager : MonoBehaviour
 
     void OnStairs(float input)
     {
-        if (input != 0 && waitTime <= 0 && !top && state != GameState.Pause)
+        if (PlayerController.State != GameState.Play)
+            return;
+        if (input != 0 && waitTime <= 0 && !top)
         {
             effector2D.surfaceArc = 180f;
             waitTime = waitTimer;
         }
-        if (input < 0 && top && state != GameState.Pause)
+        if (input < 0 && top)
         {
             effector2D.surfaceArc = 0f;
             waitTime = waitTimer;

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private GameState state = PlayerController.State;
     public GameObject pauseMenu;
     PlayerActions inputs;
     
@@ -28,14 +27,14 @@ public class UIManager : MonoBehaviour
 
     public void PauseScene()
     {
-        if (state == GameState.Pause)
+        if (PlayerController.State != GameState.Pause)
         {
-            state = GameState.Pause;
+            PlayerController.State = GameState.Pause;
             pauseMenu.SetActive(true);
         }
         else 
         {
-            state = GameState.Play;
+            PlayerController.State = GameState.Play;
             pauseMenu.SetActive(false);
         }
     }
