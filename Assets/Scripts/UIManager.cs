@@ -28,15 +28,9 @@ public class UIManager : MonoBehaviour
     public void PauseScene()
     {
         if (PlayerController.State != GameState.Pause)
-        {
-            PlayerController.State = GameState.Pause;
             pauseMenu.SetActive(true);
-        }
         else 
-        {
-            PlayerController.State = GameState.Play;
             pauseMenu.SetActive(false);
-        }
     }
 
 
