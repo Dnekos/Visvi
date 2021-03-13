@@ -127,9 +127,7 @@ public class PlayerController : MonoBehaviour
         if (OnStair)
         {
             RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.3f), Vector2.down, 1, LayerMask.GetMask("Stair"));
-            Debug.Log(hit.distance - 0.3);
-            Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
-            //if (!hit.collider.isTrigger)
+            //Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
             if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f)
                 transform.position -= Vector3.up * (hit.distance - 0.3f);
         }        
