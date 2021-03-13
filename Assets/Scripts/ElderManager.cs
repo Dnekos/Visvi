@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; 
-
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 enum ElderState
 {
     Introduction, // introductions, then give out task
-    GivingTask, // will give out a task
     AwaitingTask, // task has been given, will say hints
     Completion // all tasks done
 }
@@ -38,6 +37,8 @@ public class ElderManager : MonoBehaviour
     {
         if (assignedTask.GetTask() != CurrentTask)
             assignedTask = new TaskDialogue(CurrentTask);
+        if (state == ElderState.Completion && speech.loadedText.Count == 0)
+            SceneManager.LoadScene(2);
     }
 
     Pickup IncrementPickup(Pickup item)
@@ -57,9 +58,6 @@ public class ElderManager : MonoBehaviour
                 speech.LoadText("but you will need to collect the ingredients.");
                 speech.LoadText("I want you to learn about our culture,");
                 speech.LoadText("So I will use some Cherokee words when I speak with you.");
-                GiveTask();
-                break;
-            case ElderState.GivingTask:
                 GiveTask();
                 break;
             case ElderState.AwaitingTask:

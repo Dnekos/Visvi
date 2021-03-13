@@ -53,15 +53,21 @@ TagManager:
   - name: Furnature
     uniqueID: 1520404039
     locked: 0
-  - name: Collectables
-    uniqueID: 4156186867
-    locked: 0
   - name: Play Area
     uniqueID: 3201776625
     locked: 0
   - name: Fireplace
     uniqueID: 3245897283
     locked: 0
+  - name: Collectables
+    uniqueID: 4156186867
+    locked: 0
   - name: Character
     uniqueID: 2461192211
+    locked: 0
+  - name: Foreground
+    uniqueID: 637155147
+    locked: 0
+  - name: Forestground
+    uniqueID: 3136753813
     locked: 0
