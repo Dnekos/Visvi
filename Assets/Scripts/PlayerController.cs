@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameState
+{
+    Play,
+    Pause,
+    Talk
+};
 public class PlayerController : MonoBehaviour
 {
-
+    public static GameState State;
+    
     //movement
     [SerializeField]
     float moveSpeed = 3;
@@ -13,6 +21,7 @@ public class PlayerController : MonoBehaviour
     //interacting
     bool hitInteract = false;
     public Pickup heldItem = Pickup.None;
+    SpeechBubbleManager dialogue;
 
     PlayerActions inputs;
     bool paused = false;
@@ -23,6 +32,10 @@ public class PlayerController : MonoBehaviour
         inputs.Move.Pause.performed += ctx => OnPause();
         inputs.Move.Interact.performed += ctx => OnInteract(ctx.ReadValue<float>());
     }
+    private void Start()
+    {
+        dialogue = GameObject.FindObjectOfType<SpeechBubbleManager>(); // in start in case Awake causes problems
+    }
 
     private void OnMove(float input)
     {
@@ -32,7 +45,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause()
     {
-        paused = !paused;
+        if (State == GameState.Pause)
+            State = GameState.Play;
+        else
+            State = GameState.Pause;
+
         Debug.Log("hit pause");
     }
     private void OnInteract(float input) // unity doesn't like casting inputs as bool, so have to do it as float
@@ -42,11 +59,14 @@ public class PlayerController : MonoBehaviour
             hitInteract = true;
         else
             hitInteract = false;
+
+        if (State == GameState.Talk && input == 1)
+            dialogue.NextLine();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!hitInteract || paused)
+        if (!hitInteract || State != GameState.Play)
             return;
         switch(collision.tag)
         {
@@ -62,6 +82,7 @@ public class PlayerController : MonoBehaviour
             case "Talkable":
                 hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                 collision.GetComponent<ElderManager>().Talk(heldItem);
+                State = GameState.Talk;
                 break;
         }
     }
@@ -69,15 +90,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!paused)
-        {
-            if (moveDirection.x < 0) // if going left, flip sprite
-                transform.localScale = new Vector3(-1, 1, 1);
-            else if (moveDirection.x > 0) // if going right, set sprite back
-                transform.localScale = new Vector3(1, 1, 1);
+        Debug.Log(State);
+        if (State != GameState.Play)
+            return;
 
-            transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
-        }
+        if (moveDirection.x < 0) // if going left, flip sprite
+            transform.localScale = new Vector3(-1, 1, 1);
+        else if (moveDirection.x > 0) // if going right, set sprite back
+            transform.localScale = new Vector3(1, 1, 1);
+
+        transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
     }
 
     //these two are needed for the inputs to work

@@ -32,6 +32,8 @@ public class StairManager : MonoBehaviour
 
     void OnStairs(float input)
     {
+        if (PlayerController.State != GameState.Play)
+            return;
         if (input != 0 && waitTime <= 0 && !top)
         {
             effector2D.surfaceArc = 180f;
@@ -47,17 +49,13 @@ public class StairManager : MonoBehaviour
     private void OnTriggerExit2D(Collider2D col)
     {
         if (col.tag.Equals("Player") && !col.isTrigger && !top)
-        {
             effector2D.surfaceArc = 0f;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag.Equals("Player") && !col.isTrigger && top)
-        {
             effector2D.surfaceArc = 180f;
-        }
     }
     //these two are needed for the inputs to work
     private void OnEnable()

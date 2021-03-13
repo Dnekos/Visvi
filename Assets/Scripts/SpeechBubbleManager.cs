@@ -102,15 +102,14 @@ public class SpeechBubbleManager : MonoBehaviour
 {
     // text variables
     public List<KeyValuePair<string,string>> loadedText;
-    //List<string> subtextText;
     int textIndex = 0;
 
     [Header("Timing")]
     [SerializeField]
     float textSpeed = 1;
     float textTimer = 0;
-    [SerializeField]
-    float waitTime = 10;
+    //[SerializeField]
+    //float waitTime = 10;
     [SerializeField]
     bool counting = false;
 
@@ -148,6 +147,24 @@ public class SpeechBubbleManager : MonoBehaviour
         tail.enabled = false;
     }
 
+    public void NextLine()
+    {
+        if (counting)
+            return;
+
+        ownText.text = "";
+        childText.text = "";
+
+        if (loadedText.Count == 0)
+        {
+            bubble.enabled = false;
+            tail.enabled = false;
+            PlayerController.State = GameState.Play;
+        }
+        else
+            counting = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -155,17 +172,19 @@ public class SpeechBubbleManager : MonoBehaviour
 
         if (counting && textTimer > 1) // incrementing text
         {
-            if (loadedText[0].Value == null)
-                bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 11);
-            else
-                bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 18);
+            if (textIndex == 0) // setting up speech bubble, only happens once per phrase
+            {
+                if (loadedText[0].Value == null)
+                    bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 11);
+                else
+                    bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 18);
 
-            //bubble.rectTransform.sizeDelta = new Vector2(1, 5);
+                bubble.enabled = true;
+                tail.enabled = true;
 
-            bubble.enabled = true;
-            tail.enabled = true;
+                phoneticText.text = loadedText[0].Value;
+            }
 
-            phoneticText.text = loadedText[0].Value;
             ownText.text += loadedText[0].Key[textIndex]; // add next letter
             childText.text = ownText.text;
             textIndex++;
@@ -178,7 +197,7 @@ public class SpeechBubbleManager : MonoBehaviour
                 counting = false;
             }
         }
-        else if (textTimer > waitTime)
+        /*else if (textTimer > waitTime)
         {
             ownText.text = "";
             childText.text = "";
@@ -190,6 +209,6 @@ public class SpeechBubbleManager : MonoBehaviour
             }
             else
                 counting = true;
-        }
+        }*/
     }
 }
