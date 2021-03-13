@@ -154,6 +154,7 @@ public class SpeechBubbleManager : MonoBehaviour
 
         ownText.text = "";
         childText.text = "";
+        phoneticText.text = "";
 
         if (loadedText.Count == 0)
         {
@@ -174,7 +175,7 @@ public class SpeechBubbleManager : MonoBehaviour
         {
             if (textIndex == 0) // setting up speech bubble, only happens once per phrase
             {
-                if (loadedText[0].Value == null)
+                if (loadedText[0].Value == null || loadedText[0].Value == "")
                     bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 11);
                 else
                     bubble.rectTransform.offsetMax = new Vector2(bubble.rectTransform.offsetMax.x, 18);
@@ -197,18 +198,5 @@ public class SpeechBubbleManager : MonoBehaviour
                 counting = false;
             }
         }
-        /*else if (textTimer > waitTime)
-        {
-            ownText.text = "";
-            childText.text = "";
-
-            if (loadedText.Count == 0)
-            {
-                bubble.enabled = false;
-                tail.enabled = false;
-            }
-            else
-                counting = true;
-        }*/
     }
 }

@@ -112,8 +112,8 @@ public class ElderManager : MonoBehaviour
         assignedTask = new TaskDialogue(IncrementPickup(assignedTask.GetTask()));
         CurrentTask = assignedTask.GetTask();
 
-        foreach (string line in assignedTask.StartLine())
-            speech.LoadText(line); // completion text bubble
+        foreach (string[] line in assignedTask.StartLine())
+            speech.LoadText(line[0], line[1]); // completion text bubble
     }
 
     void CompletionDialogue()
