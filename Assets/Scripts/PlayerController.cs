@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float moveSpeed = 3;
     Vector3 moveDirection;
+    Rigidbody2D rb;
 
     // stay on ground variables
     [SerializeField]
@@ -34,10 +35,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        rb = transform.GetComponent<Rigidbody2D>();
         inputs = new PlayerActions();
         inputs.Move.Move.performed += ctx => OnMove(ctx.ReadValue<float>());
         inputs.Move.Pause.performed += ctx => OnPause();
         inputs.Move.Interact.performed += ctx => OnInteract(ctx.ReadValue<float>());
+        inputs.Move.Jump.performed += ctx => OnJump(ctx.ReadValue<float>());
     }
     private void Start()
     {
@@ -47,6 +50,19 @@ public class PlayerController : MonoBehaviour
     private void OnMove(float input)
     {
         moveDirection = new Vector3(input, 0);
+    }
+
+    private bool OnGround()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.1f), Vector2.down, 1, LayerMask.GetMask("Ground"));
+        if (Mathf.Abs(hit.distance - 0.1f) < 0.01f)
+            return true;
+        return false;
+    }
+    private void OnJump(float input)
+    {
+        if (OnGround())
+            rb.AddForce(Vector2.up * 300.0f, ForceMode2D.Force);
     }
 
     public void OnPause()
@@ -116,7 +132,7 @@ public class PlayerController : MonoBehaviour
             //if (!hit.collider.isTrigger)
             if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f)
                 transform.position -= Vector3.up * (hit.distance - 0.3f);
-        }
+        }        
     }
 
     //these two are needed for the inputs to work

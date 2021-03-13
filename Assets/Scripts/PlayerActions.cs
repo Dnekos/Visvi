@@ -49,6 +49,14 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""1c172e9d-06ec-4583-8cd9-56e1bbc7fa3e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -122,17 +130,6 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""cc775715-86ad-4dd5-8c59-63831d57ceb1"",
                     ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""84507e64-3758-4692-96f8-2979a38356be"",
-                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -238,6 +235,17 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                     ""action"": ""Stairs"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03801351-8f8f-42ef-9229-980887c349c5"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -250,6 +258,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         m_Move_Interact = m_Move.FindAction("Interact", throwIfNotFound: true);
         m_Move_Pause = m_Move.FindAction("Pause", throwIfNotFound: true);
         m_Move_Stairs = m_Move.FindAction("Stairs", throwIfNotFound: true);
+        m_Move_Jump = m_Move.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -303,6 +312,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Move_Interact;
     private readonly InputAction m_Move_Pause;
     private readonly InputAction m_Move_Stairs;
+    private readonly InputAction m_Move_Jump;
     public struct MoveActions
     {
         private @PlayerActions m_Wrapper;
@@ -311,6 +321,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_Move_Interact;
         public InputAction @Pause => m_Wrapper.m_Move_Pause;
         public InputAction @Stairs => m_Wrapper.m_Move_Stairs;
+        public InputAction @Jump => m_Wrapper.m_Move_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Move; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +343,9 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                 @Stairs.started -= m_Wrapper.m_MoveActionsCallbackInterface.OnStairs;
                 @Stairs.performed -= m_Wrapper.m_MoveActionsCallbackInterface.OnStairs;
                 @Stairs.canceled -= m_Wrapper.m_MoveActionsCallbackInterface.OnStairs;
+                @Jump.started -= m_Wrapper.m_MoveActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_MoveActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_MoveActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_MoveActionsCallbackInterface = instance;
             if (instance != null)
@@ -348,6 +362,9 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                 @Stairs.started += instance.OnStairs;
                 @Stairs.performed += instance.OnStairs;
                 @Stairs.canceled += instance.OnStairs;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -358,5 +375,6 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnStairs(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
