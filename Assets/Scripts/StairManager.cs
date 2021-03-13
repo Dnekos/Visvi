@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class StairManager : MonoBehaviour
 {
-    private PlatformEffector2D effector2D;
-    private PlayerActions inputs;
-    private float waitTimer;
-    public float waitTime;
-    public bool top;
+    PlatformEffector2D effector2D;
+    PlayerActions inputs;
 
+    [SerializeField]
+    bool isSecondFloor;
+
+    PlayerController player;
+    
     private void Awake()
     {
         inputs = new PlayerActions();
@@ -20,43 +22,43 @@ public class StairManager : MonoBehaviour
     {
         effector2D = GetComponent<PlatformEffector2D>();
         effector2D.surfaceArc = 0f;
-        waitTimer = waitTime;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (waitTime > 0)
-            waitTime -= Time.deltaTime;
+        player = FindObjectOfType<PlayerController>();
     }
 
     void OnStairs(float input)
     {
         if (PlayerController.State != GameState.Play)
             return;
-        if (input != 0 && waitTime <= 0 && !top)
+
+        if (input != 0 && !isSecondFloor)
         {
             effector2D.surfaceArc = 180f;
-            waitTime = waitTimer;
         }
-        if (input < 0 && top)
-        {
+        if (input < 0 && isSecondFloor)
             effector2D.surfaceArc = 0f;
-            waitTime = waitTimer;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag.Equals("Player") && !col.isTrigger && !top)
+        if (col.tag.Equals("Player") && !col.isTrigger && !isSecondFloor)
+        {
             effector2D.surfaceArc = 0f;
+            player.OnStair = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag.Equals("Player") && !col.isTrigger && top)
+        if (col.tag.Equals("Player") && !col.isTrigger && isSecondFloor)
             effector2D.surfaceArc = 180f;
     }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.tag.Equals("Player") && !col.isTrigger && !isSecondFloor && effector2D.surfaceArc == 180f)
+            player.OnStair = true;
+    }
+
     //these two are needed for the inputs to work
     private void OnEnable()
     {

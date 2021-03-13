@@ -143,8 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f04dedf8d5aef447a6dd70f76d4db20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 0.5
-  top: 1
+  isSecondFloor: 1
+  feet: {fileID: 0}
 --- !u!61 &5389674585936986971
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -243,8 +243,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1093190671
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -340,8 +340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f04dedf8d5aef447a6dd70f76d4db20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 0.5
-  top: 0
+  isSecondFloor: 0
+  feet: {fileID: 0}
 --- !u!1 &5662763153506351470
 GameObject:
   m_ObjectHideFlags: 0

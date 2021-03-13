@@ -6,25 +6,32 @@ using UnityEngine;
 public enum GameState
 {
     Play,
+    Jump,
     Pause,
     Talk
 };
 public class PlayerController : MonoBehaviour
 {
     public static GameState State;
-    
+    GameState pre_pausestate;
+
     //movement
     [SerializeField]
     float moveSpeed = 3;
     Vector3 moveDirection;
 
+    // stay on ground variables
+    [SerializeField]
+    Transform feet;
+    public bool OnStair;
+    
     //interacting
     bool hitInteract = false;
     public Pickup heldItem = Pickup.None;
     SpeechBubbleManager dialogue;
 
     PlayerActions inputs;
-    bool paused = false;
+
     private void Awake()
     {
         inputs = new PlayerActions();
@@ -39,17 +46,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(float input)
     {
-        //Debug.Log(input);
         moveDirection = new Vector3(input, 0);
     }
 
     public void OnPause()
     {
         if (State == GameState.Pause)
-            State = GameState.Play;
+            State = pre_pausestate; // return state to last
         else
-            State = GameState.Pause;
-
+        {
+            pre_pausestate = State; // hold local value state to go back to
+            State = GameState.Pause; // pause game
+        }
         Debug.Log("hit pause");
     }
     private void OnInteract(float input) // unity doesn't like casting inputs as bool, so have to do it as float
@@ -90,7 +98,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(State);
         if (State != GameState.Play)
             return;
 
@@ -100,6 +107,16 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
 
         transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
+
+        if (OnStair)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.3f), Vector2.down, 1, LayerMask.GetMask("Stair"));
+            Debug.Log(hit.distance - 0.3);
+            Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
+            //if (!hit.collider.isTrigger)
+            if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f)
+                transform.position -= Vector3.up * (hit.distance - 0.3f);
+        }
     }
 
     //these two are needed for the inputs to work

@@ -108,8 +108,6 @@ public class SpeechBubbleManager : MonoBehaviour
     [SerializeField]
     float textSpeed = 1;
     float textTimer = 0;
-    //[SerializeField]
-    //float waitTime = 10;
     [SerializeField]
     bool counting = false;
 
