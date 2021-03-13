@@ -30,8 +30,8 @@ public class ElderManager : MonoBehaviour
         assignedTask = new TaskDialogue();
 
         // intro text
-        speech.LoadText("Hello child, it is so good to see you!");
-        speech.LoadText("Come over and talk to me!");
+        //speech.LoadText("Hello child, it is so good to see you!");
+        //speech.LoadText("Come over and talk to me!");
     }
 
     private void Update()
@@ -53,10 +53,10 @@ public class ElderManager : MonoBehaviour
         switch (state)
         {
             case ElderState.Introduction:
-                speech.LoadText("Now that you’re here I thought we could make a tasty treat together.");
-                speech.LoadText("But first you will need to gather the ingredients.");
-                speech.LoadText("However, I want you to get a little closer to our heritage.");
-                speech.LoadText("So, I will teach you a bit of the Cherokee language!");
+                speech.LoadText("Now that you are here we can make some grape dumplings,");
+                speech.LoadText("but you will need to collect the ingredients.");
+                speech.LoadText("I want you to learn about our culture,");
+                speech.LoadText("So I will use some Cherokee words when I speak with you.");
                 GiveTask();
                 break;
             case ElderState.GivingTask:
@@ -112,14 +112,14 @@ public class ElderManager : MonoBehaviour
         assignedTask = new TaskDialogue(IncrementPickup(assignedTask.GetTask()));
         CurrentTask = assignedTask.GetTask();
 
-        foreach (string line in assignedTask.StartLine())
-            speech.LoadText(line); // completion text bubble
+        foreach (string[] line in assignedTask.StartLine())
+            speech.LoadText(line[0], line[1]); // completion text bubble
     }
 
     void CompletionDialogue()
     {
         speech.LoadText("Thank you child, now I have everything we need.");
-        speech.LoadText("We can begin cooking now.");
+        speech.LoadText("After I’m done cooking, we can enjoy these grape dumplings together.");
         speech.LoadText("Thank you so much for the help!");
     }
 }
