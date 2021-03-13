@@ -53,10 +53,10 @@ public class ElderManager : MonoBehaviour
         switch (state)
         {
             case ElderState.Introduction:
-                speech.LoadText("Now that you’re here I thought we could make a tasty treat together.");
-                speech.LoadText("But first you will need to gather the ingredients.");
-                speech.LoadText("However, I want you to get a little closer to our heritage.");
-                speech.LoadText("So, I will teach you a bit of the Cherokee language!");
+                speech.LoadText("Now that you are here we can make some grape dumplings,");
+                speech.LoadText("but you will need to collect the ingredients.");
+                speech.LoadText("I want you to learn about our culture,");
+                speech.LoadText("So I will use some Cherokee words when I speak with you.");
                 GiveTask();
                 break;
             case ElderState.GivingTask:
@@ -119,7 +119,7 @@ public class ElderManager : MonoBehaviour
     void CompletionDialogue()
     {
         speech.LoadText("Thank you child, now I have everything we need.");
-        speech.LoadText("We can begin cooking now.");
+        speech.LoadText("After I’m done cooking, we can enjoy these grape dumplings together.");
         speech.LoadText("Thank you so much for the help!");
     }
 }
