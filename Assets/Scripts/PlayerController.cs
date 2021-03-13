@@ -14,11 +14,13 @@ public class PlayerController : MonoBehaviour
 {
     public static GameState State;
     GameState pre_pausestate;
+    Rigidbody2D rigidbody2D;
 
     //movement
     [SerializeField]
     float moveSpeed = 3;
     Vector3 moveDirection;
+    bool Jumping = false;
 
     // stay on ground variables
     [SerializeField]
@@ -34,10 +36,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        rigidbody2D = transform.GetComponent<Rigidbody2D>();
         inputs = new PlayerActions();
         inputs.Move.Move.performed += ctx => OnMove(ctx.ReadValue<float>());
         inputs.Move.Pause.performed += ctx => OnPause();
         inputs.Move.Interact.performed += ctx => OnInteract(ctx.ReadValue<float>());
+        inputs.Move.Jump.performed += ctx => OnJump(ctx.ReadValue<float>());
     }
     private void Start()
     {
@@ -47,6 +51,27 @@ public class PlayerController : MonoBehaviour
     private void OnMove(float input)
     {
         moveDirection = new Vector3(input, 0);
+    }
+
+    private bool OnGround()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.1f), Vector2.down, 1, LayerMask.GetMask("Ground"));
+        //Debug.Log(hit.distance - 0.1);
+        //Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
+
+        if (Mathf.Abs(hit.distance - 0.1f) < 0.1f && Mathf.Abs(hit.distance - 0.1f) > 0.01f)
+        {
+            return true;
+        }
+        return false;
+    }
+    private void OnJump(float input)
+    {
+        if (!Jumping)
+        {
+            Jumping = true;
+            rigidbody2D.AddForce(Vector2.up * 300.0f, ForceMode2D.Force);
+        }
     }
 
     public void OnPause()
@@ -117,6 +142,12 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f)
                 transform.position -= Vector3.up * (hit.distance - 0.3f);
         }
+
+        if (OnGround())
+        {
+            Jumping = false;
+        }
+        
     }
 
     //these two are needed for the inputs to work
