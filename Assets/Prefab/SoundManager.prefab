@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 8233584557954625013}
-  MenuMusic: {fileID: 8300000, guid: 4addaa3d6209608409fecc3dab486f9b, type: 3}
-  LevelMusic: {fileID: 8300000, guid: 9e7aba8a10f57c147b9d8222903ed588, type: 3}
+  MenuMusic: {fileID: 8300000, guid: 6353155a558c9574f82b112db51163c5, type: 3}
+  LevelMusic: {fileID: 8300000, guid: f4e1e3a62267e8747adccd58fbf6a329, type: 3}
 --- !u!1 &8233584557954625015
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0

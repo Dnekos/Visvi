@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager instance = null;
 
     static public AudioSource sfxSource;
     public AudioSource musicSource;
@@ -14,32 +15,39 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     AudioClip LevelMusic;
 
-  //  [SerializeField]
-   // static AudioClip ButtonSFX;
+    [SerializeField]
+    static AudioClip ButtonSFX;
     [SerializeField]
     static AudioClip PickupSFX;
 
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         sfxSource = GetComponentInChildren<AudioSource>();
         DontDestroyOnLoad(transform.gameObject);
         SceneManager.activeSceneChanged += ChangedActiveScene;
 
         PickupSFX = Resources.Load<AudioClip>("Sounds/pickup_sfx");
-      //  ButtonSFX = Resources.Load<AudioClip>("Sounds/button_sfx");
+        ButtonSFX = Resources.Load<AudioClip>("Sounds/click_sfx");
     }
 
-    static public void PlayPickupSFX()
+    public void PlayPickupSFX()
     {
-        if (!Application.isEditor)
+        //if (!Application.isEditor)
             sfxSource.PlayOneShot(PickupSFX);
     }
 
-    static public void PlayButtonSFX()
+    public void PlayButtonSFX()
     {
-       // if (!Application.isEditor)
-            //sfxSource.PlayOneShot(ButtonSFX);
+        //if (!Application.isEditor)
+            sfxSource.PlayOneShot(ButtonSFX);
     }
 
 

@@ -85,7 +85,10 @@ public class PlayerController : MonoBehaviour
             hitInteract = false;
 
         if (State == GameState.Talk && input == 1)
+        {
+            hitInteract = false; // prevent getting stuck in a loop when walking and talking
             dialogue.NextLine();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -99,7 +102,7 @@ public class PlayerController : MonoBehaviour
                 {
                     hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                     heldItem = collision.GetComponent<PickupManager>().data; // set held item
-                    SoundManager.PlayPickupSFX();
+                    SoundManager.instance.PlayPickupSFX();
                     Destroy(collision.gameObject);
                 }
                 break;

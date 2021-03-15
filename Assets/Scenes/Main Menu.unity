@@ -688,7 +688,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1429,14 +1429,6 @@ PrefabInstance:
     - target: {fileID: 8233584557069297902, guid: aed239619dec8334cb1590e12e9b99c9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8233584557069297903, guid: aed239619dec8334cb1590e12e9b99c9, type: 3}
-      propertyPath: MenuMusic
-      value: 
-      objectReference: {fileID: 8300000, guid: 4addaa3d6209608409fecc3dab486f9b, type: 3}
-    - target: {fileID: 8233584557954625013, guid: aed239619dec8334cb1590e12e9b99c9, type: 3}
-      propertyPath: m_Volume
-      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8233584558573226832, guid: aed239619dec8334cb1590e12e9b99c9, type: 3}
       propertyPath: m_Volume
