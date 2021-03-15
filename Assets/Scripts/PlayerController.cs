@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
         else if (moveDirection.x > 0) // if going right, set sprite back
             transform.localScale = new Vector3(1, 1, 1);
 
-        float stairmodifier = (OnStair && moveDirection.x < 0) ? 0.5f : 1; // slow down going donw stairs
+        float stairmodifier = (OnStair && !OnGround() && moveDirection.x < 0) ? 0.5f : 1; // slow down going down stairs
         transform.position += moveDirection * moveSpeed * Time.deltaTime * stairmodifier; // move player
 
         if (OnStair)
