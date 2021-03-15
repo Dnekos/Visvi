@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private bool OnGround()
     {
         RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.1f), Vector2.down, 1, LayerMask.GetMask("Ground"));
-        if (Mathf.Abs(hit.distance - 0.1f) < 0.01f)
+        if (Mathf.Abs(hit.distance - 0.1f) < 0.01f && State == GameState.Play)
             return true;
         return false;
     }
@@ -125,13 +125,16 @@ public class PlayerController : MonoBehaviour
         else if (moveDirection.x > 0) // if going right, set sprite back
             transform.localScale = new Vector3(1, 1, 1);
 
-        transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
+        float stairmodifier = (OnStair && moveDirection.x < 0) ? 0.5f : 1; // slow down going donw stairs
+        transform.position += moveDirection * moveSpeed * Time.deltaTime * stairmodifier; // move player
 
         if (OnStair)
         {
             RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.3f), Vector2.down, 1, LayerMask.GetMask("Stair"));
-            //Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
-            if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f)
+            Vector2 slope = new Vector2(-0.6f, 0.8f);
+
+            // if not a huge distance(no stairs at all)   if not standing still                           if ascending side                         stop slipping
+            if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f && slope.ToString() == hit.normal.ToString() && moveDirection.x != 0)
                 transform.position -= Vector3.up * (hit.distance - 0.3f);
         }        
     }
