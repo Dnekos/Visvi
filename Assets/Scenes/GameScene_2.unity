@@ -13415,11 +13415,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5443961694816067548, guid: e3d70839ece862849bf1de288505a7fb, type: 3}
       propertyPath: m_LocalPosition.x
+<<<<<<< HEAD
       value: -13.33
       objectReference: {fileID: 0}
     - target: {fileID: 5443961694816067548, guid: e3d70839ece862849bf1de288505a7fb, type: 3}
       propertyPath: m_LocalPosition.y
       value: -14.76
+=======
+      value: -9.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 5443961694816067548, guid: e3d70839ece862849bf1de288505a7fb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.51
+>>>>>>> artImp
       objectReference: {fileID: 0}
     - target: {fileID: 5443961694816067548, guid: e3d70839ece862849bf1de288505a7fb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23805,7 +23813,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8823266851054945710, guid: 7a2571766488da74eb37307dc18b4806, type: 3}
       propertyPath: m_Name
+<<<<<<< HEAD
       value: Player_Animations
+=======
+      value: Player_Animation_walk
+>>>>>>> artImp
       objectReference: {fileID: 0}
     - target: {fileID: 8861685801482210595, guid: 7a2571766488da74eb37307dc18b4806, type: 3}
       propertyPath: m_LocalRotation.w
