@@ -33,7 +33,7 @@ public class TaskDialogue
                 op_dialogue = new string[][] { new string[]{"Before we collect ingredients,", "" },
                     new string[]{ "you will need something to hold them in.", "" },
                     new string[]{ "My ᏔᎷᏣ should be upstairs in my room.", "      (Talutasa)" } };
-                hint_dialogue = new string[] { "I wove it myself many years ago.", "I keep it near my bed." };
+                hint_dialogue = new string[] { "I wove it myself many years ago.", "It should be on my bed." };
                 end_dialogue = new string[] { "Now we can begin gathering our ingredients." };
                 break;
             case Pickup.Grapes:
@@ -86,13 +86,13 @@ public class TaskDialogue
             case Pickup.ServingBowl:
                 op_dialogue = new string[][] { new string[]{"Before we eat, we need something to eat our grape dumplings in.", "" },
                     new string[]{"Go get some ᎠᏟᏍᏙᏗ for us to use.", "                        (Atlisdodi)" } };
-                hint_dialogue = new string[] { "They are upstairs in the dining room.", "They are by the cabinet upstairs." };
+                hint_dialogue = new string[] { "They are upstairs in the dining room.", "They are on the shelf upstairs." };
                 end_dialogue = new string[] { "Thank you dear, these were a special gift from one of your ancestors." };
                 break;
             case Pickup.Napkin:
                 op_dialogue = new string[][] { new string[] { "Finally, we need something in case we make a mess", "" },
                     new string[]{ "Go get some ᏗᎩᏑᎵᏙᏗ so we can wipe our hands and faces.", "                       (Digisulidodi)" } };
-                hint_dialogue = new string[] { "They are folded up by the side of the table.", "They should be upstairs in the dining room." };
+                hint_dialogue = new string[] { "They are folded up on the side of the table.", "They should be upstairs in the dining room." };
                 end_dialogue = new string[] { "Shall we set these out?" };
                 break;
             default:

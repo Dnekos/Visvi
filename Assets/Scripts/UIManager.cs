@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
 
     public void GoToScene(int scene)
     {
+        SoundManager.instance.PlayButtonSFX();
         SceneManager.LoadScene(scene);
     }
 
@@ -27,6 +28,8 @@ public class UIManager : MonoBehaviour
 
     public void PauseScene()
     {
+        if (!Application.isEditor)
+            SoundManager.instance.PlayButtonSFX();
         if (PlayerController.State != GameState.Pause)
             pauseMenu.SetActive(true);
         else 

@@ -6,13 +6,12 @@ using UnityEngine;
 public enum GameState
 {
     Play,
-    Jump,
     Pause,
     Talk
 };
 public class PlayerController : MonoBehaviour
 {
-    public static GameState State;
+    public static GameState State = GameState.Talk;
     GameState pre_pausestate;
 
     //movement
@@ -25,6 +24,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Transform feet;
     public bool OnStair;
+
+    // animation
+    Animator anim;
     
     //interacting
     bool hitInteract = false;
@@ -35,7 +37,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        rb = transform.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         inputs = new PlayerActions();
         inputs.Move.Move.performed += ctx => OnMove(ctx.ReadValue<float>());
         inputs.Move.Pause.performed += ctx => OnPause();
@@ -55,7 +58,7 @@ public class PlayerController : MonoBehaviour
     private bool OnGround()
     {
         RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.1f), Vector2.down, 1, LayerMask.GetMask("Ground"));
-        if (Mathf.Abs(hit.distance - 0.1f) < 0.01f)
+        if (Mathf.Abs(hit.distance - 0.1f) < 0.03f && State == GameState.Play)
             return true;
         return false;
     }
@@ -85,7 +88,10 @@ public class PlayerController : MonoBehaviour
             hitInteract = false;
 
         if (State == GameState.Talk && input == 1)
+        {
+            hitInteract = false; // prevent getting stuck in a loop when walking and talking
             dialogue.NextLine();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -99,7 +105,7 @@ public class PlayerController : MonoBehaviour
                 {
                     hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                     heldItem = collision.GetComponent<PickupManager>().data; // set held item
-                    SoundManager.PlayPickupSFX();
+                    SoundManager.instance.PlayPickupSFX();
                     Destroy(collision.gameObject);
                 }
                 break;
@@ -107,6 +113,7 @@ public class PlayerController : MonoBehaviour
                 hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                 collision.GetComponent<ElderManager>().Talk(heldItem);
                 State = GameState.Talk;
+                anim.SetFloat("Speed", 0);
                 break;
         }
     }
@@ -118,19 +125,25 @@ public class PlayerController : MonoBehaviour
             return;
 
         if (moveDirection.x < 0) // if going left, flip sprite
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-0.65f, 0.65f, 0.65f);
         else if (moveDirection.x > 0) // if going right, set sprite back
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
 
-        transform.position += moveDirection * moveSpeed * Time.deltaTime; // move player
+        float stairmodifier = (OnStair && !OnGround() && moveDirection.x < 0) ? 1f : 1; // slow down going down stairs
+        transform.position += moveDirection * moveSpeed * Time.deltaTime * stairmodifier; // move player
 
         if (OnStair)
         {
             RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.3f), Vector2.down, 1, LayerMask.GetMask("Stair"));
-            //Debug.DrawRay(feet.position + Vector3.up, Vector2.down, Color.white, 1);
-            if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f)
-                transform.position -= Vector3.up * (hit.distance - 0.3f);
-        }        
+            Vector2 slope = new Vector2(-0.6f, 0.8f);
+
+            // if not a huge distance(no stairs at all)   if not standing still                           if ascending side                         stop slipping
+            if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f && slope.ToString() == hit.normal.ToString() && moveDirection.x != 0)
+                transform.position -= (moveDirection.x < 0) ? Vector3.up * (hit.distance - 0.4f) : Vector3.up * (hit.distance - 0.5f);
+        }
+
+        anim.SetBool("OnGround", OnGround());
+        anim.SetFloat("Speed", moveDirection.x);
     }
 
     //these two are needed for the inputs to work
