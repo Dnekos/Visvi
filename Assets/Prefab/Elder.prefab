@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383ae5525e607459a60a24bdce5769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textSpeed: 25
+  textSpeed: 30
   counting: 0
   childText: {fileID: 8671201778532680638}
   phoneticText: {fileID: 8204064349864370886}

@@ -57,14 +57,15 @@ public class SoundManager : MonoBehaviour
         switch (next.buildIndex)
         {
             case 0: // main menu
-            case 2: // credits
+            case 1: // controls
+            case 3: // credits
                 if (!(musicSource.isPlaying && musicSource.clip == MenuMusic))
                 {
                     musicSource.clip = MenuMusic;
                     musicSource.Play();
                 }
                 break;
-            case 1:
+            case 2: // main game
                 musicSource.clip = LevelMusic;
                 musicSource.Play();
                 break;

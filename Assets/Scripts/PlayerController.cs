@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
         else if (moveDirection.x > 0) // if going right, set sprite back
             transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
 
-        float stairmodifier = (OnStair && !OnGround() && moveDirection.x < 0) ? 0.5f : 1; // slow down going down stairs
+        float stairmodifier = (OnStair && !OnGround() && moveDirection.x < 0) ? 1f : 1; // slow down going down stairs
         transform.position += moveDirection * moveSpeed * Time.deltaTime * stairmodifier; // move player
 
         if (OnStair)
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
 
             // if not a huge distance(no stairs at all)   if not standing still                           if ascending side                         stop slipping
             if (Mathf.Abs(hit.distance - 0.3f) < 0.3f && Mathf.Abs(hit.distance - 0.3f) > 0.03f && slope.ToString() == hit.normal.ToString() && moveDirection.x != 0)
-                transform.position -= Vector3.up * (hit.distance - 0.3f);
+                transform.position -= (moveDirection.x < 0) ? Vector3.up * (hit.distance - 0.4f) : Vector3.up * (hit.distance - 0.5f);
         }
 
         anim.SetBool("OnGround", OnGround());
