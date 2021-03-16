@@ -29,8 +29,8 @@ public class ElderManager : MonoBehaviour
         assignedTask = new TaskDialogue();
 
         // intro text
-        //speech.LoadText("Hello child, it is so good to see you!");
-        //speech.LoadText("Come over and talk to me!");
+        speech.LoadText("Hello child, it is so good to see you!");
+        speech.LoadText("Come over and talk to me!");
     }
 
     private void Update()

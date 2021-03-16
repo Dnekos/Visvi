@@ -6,13 +6,12 @@ using UnityEngine;
 public enum GameState
 {
     Play,
-    Jump,
     Pause,
     Talk
 };
 public class PlayerController : MonoBehaviour
 {
-    public static GameState State;
+    public static GameState State = GameState.Talk;
     GameState pre_pausestate;
 
     //movement
@@ -54,15 +53,11 @@ public class PlayerController : MonoBehaviour
     private void OnMove(float input)
     {
         moveDirection = new Vector3(input, 0);
-        anim.SetFloat("Speed", input);
     }
 
     private bool OnGround()
     {
         RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.1f), Vector2.down, 1, LayerMask.GetMask("Ground"));
-        Debug.DrawRay(feet.position + new Vector3(0, 0.1f), Vector2.down, Color.white, 0.2f);
-        Debug.Log(Mathf.Abs(hit.distance - 0.1f) < 0.03f);
-        Debug.Log(Mathf.Abs(hit.distance - 0.1f));
         if (Mathf.Abs(hit.distance - 0.1f) < 0.03f && State == GameState.Play)
             return true;
         return false;
@@ -147,8 +142,8 @@ public class PlayerController : MonoBehaviour
                 transform.position -= Vector3.up * (hit.distance - 0.3f);
         }
 
-        Debug.Log(OnGround());
         anim.SetBool("OnGround", OnGround());
+        anim.SetFloat("Speed", moveDirection.x);
     }
 
     //these two are needed for the inputs to work
