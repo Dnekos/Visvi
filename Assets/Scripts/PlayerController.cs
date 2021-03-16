@@ -60,17 +60,17 @@ public class PlayerController : MonoBehaviour
     private bool OnGround()
     {
         RaycastHit2D hit = Physics2D.Raycast(feet.position + new Vector3(0, 0.1f), Vector2.down, 1, LayerMask.GetMask("Ground"));
-        if (Mathf.Abs(hit.distance - 0.1f) < 0.01f && State == GameState.Play)
+        Debug.DrawRay(feet.position + new Vector3(0, 0.1f), Vector2.down, Color.white, 0.2f);
+        Debug.Log(Mathf.Abs(hit.distance - 0.1f) < 0.03f);
+        Debug.Log(Mathf.Abs(hit.distance - 0.1f));
+        if (Mathf.Abs(hit.distance - 0.1f) < 0.03f && State == GameState.Play)
             return true;
         return false;
     }
     private void OnJump(float input)
     {
         if (OnGround())
-        {
             rb.AddForce(Vector2.up * 300.0f, ForceMode2D.Force);
-            anim.SetTrigger("Jump");
-        }
     }
 
     public void OnPause()
@@ -118,6 +118,7 @@ public class PlayerController : MonoBehaviour
                 hitInteract = false; // prevent doing multiple actions this frame if multiple collisions occur
                 collision.GetComponent<ElderManager>().Talk(heldItem);
                 State = GameState.Talk;
+                anim.SetFloat("Speed", 0);
                 break;
         }
     }
@@ -146,6 +147,7 @@ public class PlayerController : MonoBehaviour
                 transform.position -= Vector3.up * (hit.distance - 0.3f);
         }
 
+        Debug.Log(OnGround());
         anim.SetBool("OnGround", OnGround());
     }
 
